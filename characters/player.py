@@ -27,32 +27,47 @@ class Player:
 
     @property
     def health(self):
-        return f"Your current health is : {self.health}"
+        return self._health
+
+    def display_health(self):
+        return f"Your current health is : {self.health()}"
 
     @health.setter
     def health(self, new_health, health_changer):
-        if self.health + new_health == 0:
+        if self.health() + new_health == 0:
             self.die(health_changer)
-        elif self.health + new_health > Player.max_health:
-            self.health = Player.max_health
+        elif self.health() + new_health > Player.max_health:
+            self.health() = Player.max_health
         else:
-            self.health += new_health
+            self.health() += new_health
 
         if new_health > 0:
-            print("You healed, your new health is {self.health}")
+            print(f"You healed, your new health is {self.health()}")
         elif new_health < 0:
-            print("You took some damage from {health_changer}")
+            print(f"You took some damage from {health_changer}")
         else:
             print("Your health was not changed...")
 
     @property
     def thirst(self):
-        if self.thirst == 0:
+        return self.thirst()
+    
+    @staticmethod
+    def display_thirst(self):
+        if self.thirst() == 0:
             return f"You are not thirsty."
-        elif self.thirst >= 50:
+        elif self.thirst() >= 50:
             return f"You are slightly thirsty."
-        elif self.thirst >= 80:
+        elif self.thirst() >= 80:
             return f"You are running very low on water"
-        elif self.thirst >= 100:
+        elif self.thirst() >= 100:
             self.die("thirst")
-        
+
+    @thirst.setter
+    def thirst(self, new_thirst):
+        if self.thirst() + new_thirst == 100:
+            self.die("thirst")
+
+    @property 
+    def inventory(self):
+        return self._inventory
